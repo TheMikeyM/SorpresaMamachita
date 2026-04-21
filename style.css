@@ -1,0 +1,355 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --pink:     #f5c2d8;
+  --pink-d:   #d97fa8;
+  --pink-bg:  #fde8f2;
+  --lila:     #d8c2f5;
+  --lila-d:   #9d7fd9;
+  --lila-bg:  #f0e8fd;
+  --menta:    #c2f0e0;
+  --menta-d:  #5cc9a0;
+  --menta-bg: #e8fdf5;
+  --cream:    #fff8f0;
+  --text:     #6b4c6b;
+  --text-s:   #b09ab0;
+  --white:    #ffffff;
+  --shadow:   rgba(180, 130, 180, 0.18);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Nunito', sans-serif;
+  background: var(--cream);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.5rem 1rem 3rem;
+  position: relative;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 50% at 10% 10%, #fde8f280 0%, transparent 70%),
+    radial-gradient(ellipse 50% 60% at 90% 80%, #f0e8fd80 0%, transparent 70%),
+    radial-gradient(ellipse 40% 40% at 50% 50%, #e8fdf540 0%, transparent 80%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Layout ── */
+.content {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 560px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+/* ── Título ── */
+.title {
+  text-align: center;
+  padding-top: 0.5rem;
+}
+
+.title h1 {
+  font-family: 'Pacifico', cursive;
+  font-size: clamp(1.6rem, 5vw, 2.2rem);
+  color: var(--lila-d);
+  text-shadow: 2px 2px 0 #f5c2d840;
+  letter-spacing: 1px;
+}
+
+.title p {
+  font-size: 0.88rem;
+  color: var(--text-s);
+  margin-top: 4px;
+}
+
+/* ── Card ── */
+.card {
+  background: var(--white);
+  border-radius: 20px;
+  box-shadow: 0 4px 20px var(--shadow);
+  width: 100%;
+}
+
+/* ── Galería ── */
+.section-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-s);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  align-self: flex-start;
+  width: 100%;
+  padding-left: 2px;
+}
+
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  width: 100%;
+}
+
+.thumb-wrap {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.thumb {
+  width: 64px;
+  height: 64px;
+  border-radius: 12px;
+  object-fit: cover;
+  cursor: pointer;
+  border: 3px solid transparent;
+  display: block;
+  transition: transform 0.15s, border-color 0.15s;
+}
+
+.thumb:hover {
+  transform: scale(1.08);
+}
+
+.thumb.selected {
+  border-color: var(--lila-d);
+  box-shadow: 0 0 0 3px #d8c2f580;
+}
+
+.thumb-del {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--pink-d);
+  border: none;
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.thumb-del:hover {
+  background: #c05080;
+}
+
+/* ── Zona de subida ── */
+.upload-zone {
+  border: 2.5px dashed var(--pink);
+  border-radius: 16px;
+  padding: 1.2rem 1rem;
+  text-align: center;
+  cursor: pointer;
+  background: var(--pink-bg);
+  transition: 0.2s;
+  width: 100%;
+}
+
+.upload-zone:hover,
+.upload-zone.drag {
+  border-color: var(--pink-d);
+  background: #fdd4e8;
+}
+
+.upload-zone input {
+  display: none;
+}
+
+.upload-zone .upload-icon {
+  font-size: 1.8rem;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.upload-zone p {
+  font-size: 0.88rem;
+  color: var(--pink-d);
+  font-weight: 600;
+}
+
+.upload-zone span {
+  font-size: 0.76rem;
+  color: var(--text-s);
+}
+
+/* ── Controles ── */
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+}
+
+.size-group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.size-group label {
+  font-size: 0.82rem;
+  color: var(--text-s);
+  font-weight: 600;
+}
+
+.size-btns {
+  display: flex;
+  gap: 5px;
+}
+
+.size-btns button {
+  padding: 5px 13px;
+  border-radius: 20px;
+  border: 2px solid var(--lila);
+  background: white;
+  color: var(--lila-d);
+  font-size: 0.8rem;
+  font-weight: 700;
+  font-family: 'Nunito', sans-serif;
+  cursor: pointer;
+  transition: 0.15s;
+}
+
+.size-btns button.active,
+.size-btns button:hover {
+  background: var(--lila-bg);
+  border-color: var(--lila-d);
+}
+
+.btn-mezclar {
+  padding: 8px 22px;
+  border-radius: 20px;
+  border: none;
+  background: linear-gradient(135deg, var(--lila-d), var(--pink-d));
+  color: white;
+  font-size: 0.88rem;
+  font-weight: 700;
+  font-family: 'Nunito', sans-serif;
+  cursor: pointer;
+  transition: 0.18s;
+  box-shadow: 0 3px 10px rgba(180, 100, 180, 0.3);
+  letter-spacing: 0.3px;
+}
+
+.btn-mezclar:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 14px rgba(180, 100, 180, 0.4);
+}
+
+.btn-mezclar:active {
+  transform: translateY(0);
+}
+
+/* ── Victoria ── */
+.win-msg {
+  width: 100%;
+  text-align: center;
+  padding: 12px 16px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, var(--menta-bg), var(--lila-bg));
+  border: 2px solid var(--menta-d);
+  color: var(--menta-d);
+  font-size: 1rem;
+  font-weight: 700;
+  display: none;
+  animation: popIn 0.4s ease;
+}
+
+.win-msg.show {
+  display: block;
+}
+
+@keyframes popIn {
+  0%   { transform: scale(0.85); opacity: 0; }
+  70%  { transform: scale(1.04); }
+  100% { transform: scale(1);    opacity: 1; }
+}
+
+/* ── Puzzle ── */
+.puzzle-wrapper {
+  background: var(--white);
+  border-radius: 20px;
+  padding: 14px;
+  box-shadow: 0 4px 24px var(--shadow);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+#puzzle {
+  display: grid;
+  gap: 3px;
+  line-height: 0;
+}
+
+.piece {
+  border-radius: 7px;
+  cursor: pointer;
+  background-repeat: no-repeat;
+  transition: transform 0.1s;
+  position: relative;
+}
+
+.piece:not(.empty):hover {
+  transform: scale(0.96);
+  z-index: 2;
+}
+
+.piece.empty {
+  background-image: none !important;
+  background-color: var(--pink-bg) !important;
+  border: 2.5px dashed var(--pink);
+  cursor: default;
+  border-radius: 7px;
+}
+
+.piece.empty:hover {
+  transform: none;
+}
+
+/* ── Estado vacío ── */
+.empty-state {
+  text-align: center;
+  padding: 2.5rem 1rem;
+  color: var(--text-s);
+  font-size: 0.9rem;
+  width: 100%;
+}
+
+.empty-state .big {
+  font-size: 2.5rem;
+  display: block;
+  margin-bottom: 8px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 400px) {
+  .thumb { width: 54px; height: 54px; }
+  .btn-mezclar { padding: 8px 16px; font-size: 0.82rem; }
+}

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🧩 Rompecabezas</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700&family=Pacifico&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="content">
+
+    <div class="title">
+      <h1>Rompecabezas 🧩</h1>
+      <p>Elige una foto y a jugar ✨</p>
+    </div>
+
+    <div class="section-label" id="galleryLabel" style="display:none">🖼️ Fotitos</div>
+    <div class="card" id="galleryCard" style="display:none; padding: 0.9rem;">
+      <div class="gallery" id="gallery"></div>
+    </div>
+
+    <div class="upload-zone" id="dropZone">
+      <input type="file" id="upload" accept="image/*" multiple>
+      <span class="upload-icon">🌸</span>
+      <p>O sube más fotos aquí</p>
+      <span>Puedes subir varias a la vez · JPG, PNG, WEBP</span>
+    </div>
+
+    <div class="controls">
+      <div class="size-group">
+        <label>Tamaño:</label>
+        <div class="size-btns">
+          <button class="active" id="btn3" onclick="changeSize(3)">3×3</button>
+          <button id="btn4" onclick="changeSize(4)">4×4</button>
+          <button id="btn5" onclick="changeSize(5)">5×5</button>
+        </div>
+      </div>
+      <button class="btn-mezclar" onclick="shuffle()">✨ Mezclar</button>
+    </div>
+
+    <div class="win-msg" id="winMsg">🎉 ¡Lo lograste! ¡Eres increíble! 🌟</div>
+
+    <div class="puzzle-wrapper" id="puzzleWrapper">
+      <div id="puzzle">
+        <div class="empty-state">
+          <span class="big">💕</span>
+          Elige una foto para empezar
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
