@@ -4,55 +4,66 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>🧩 Rompecabezas</title>
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700&family=Pacifico&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Pacifico&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
   <div class="content">
 
     <div class="title">
       <h1>Rompecabezas 🧩</h1>
-      <p>Elige una foto y a jugar ✨</p>
+      <p>¡Arma cada foto para descubrirla! ✨</p>
     </div>
 
-    <div class="section-label" id="galleryLabel" style="display:none">🖼️ Fotitos</div>
-    <div class="card" id="galleryCard" style="display:none; padding: 0.9rem;">
-      <div class="gallery" id="gallery"></div>
-    </div>
+    <!-- GALERÍA BLOQUEADA -->
+    <div class="section-label">🖼️ Álbum — completa cada rompecabezas para revelar la foto</div>
+    <div class="gallery-grid" id="gallery"></div>
 
-    <div class="upload-zone" id="dropZone">
-      <input type="file" id="upload" accept="image/*" multiple>
-      <span class="upload-icon">🌸</span>
-      <p>O sube más fotos aquí</p>
-      <span>Puedes subir varias a la vez · JPG, PNG, WEBP</span>
-    </div>
-
+    <!-- CONTROLES -->
     <div class="controls">
       <div class="size-group">
-        <label>Tamaño:</label>
+        <label>Dificultad:</label>
         <div class="size-btns">
-          <button class="active" id="btn3" onclick="changeSize(3)">3×3</button>
-          <button id="btn4" onclick="changeSize(4)">4×4</button>
-          <button id="btn5" onclick="changeSize(5)">5×5</button>
+          <button class="active" id="btn3" onclick="changeSize(3)">Fácil 3×3</button>
+          <button id="btn4" onclick="changeSize(4)">Medio 4×4</button>
+          <button id="btn5" onclick="changeSize(5)">Difícil 5×5</button>
         </div>
       </div>
-      <button class="btn-mezclar" onclick="shuffle()">✨ Mezclar</button>
+      <button class="btn-mezclar" onclick="shufflePuzzle()">🔀 Mezclar</button>
     </div>
 
-    <div class="win-msg" id="winMsg">🎉 ¡Lo lograste! ¡Eres increíble! 🌟</div>
+    <!-- MENSAJE VICTORIA -->
+    <div class="win-msg" id="winMsg">
+      <span class="win-emoji">🎉</span>
+      <span id="winText">¡Foto revelada! ¡Eres increíble!</span>
+    </div>
 
-    <div class="puzzle-wrapper" id="puzzleWrapper">
-      <div id="puzzle">
-        <div class="empty-state">
-          <span class="big">💕</span>
-          Elige una foto para empezar
+    <!-- TABLERO -->
+    <div class="board-wrapper">
+      <div class="board-label" id="boardLabel">Elige una foto del álbum</div>
+      <div class="puzzle-wrapper" id="puzzleWrapper">
+        <div id="puzzle">
+          <div class="empty-state">
+            <span class="big">💕</span>
+            <span>Toca una foto del álbum para empezar</span>
+          </div>
         </div>
       </div>
     </div>
 
   </div>
 
-  <!-- fotos.js se genera con generar.bat y contiene las fotos en base64 -->
+  <!-- Overlay de victoria -->
+  <div class="reveal-overlay" id="revealOverlay">
+    <div class="reveal-card">
+      <div class="reveal-fireworks">🎊🌸🎉🌷🎊</div>
+      <img id="revealImg" src="" alt="Foto revelada">
+      <p class="reveal-msg">¡Foto desbloqueada! 💕</p>
+      <button class="reveal-btn" onclick="closeReveal()">¡Seguir jugando! ✨</button>
+    </div>
+  </div>
+
   <script src="fotos.js"></script>
   <script src="script.js"></script>
 </body>
