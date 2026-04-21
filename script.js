@@ -1,23 +1,7 @@
 /* ==========================================================
    🌸 ROMPECABEZAS — script.js
-   ==========================================================
-   ► PARA AÑADIR FOTOS DE LA CARPETA "fotitos":
-     Edita el array FOTITOS_CARPETA de abajo con el nombre
-     exacto de cada archivo que tengas en /fotitos/
-
-     Ejemplo:
-       const FOTITOS_CARPETA = [
-         "fotitos/cumple.jpg",
-         "fotitos/playa.png",
-         "fotitos/navidad.jpg",
-       ];
+   Las fotos vienen de fotos.js (generado con generar.bat)
    ========================================================== */
-
-const FOTITOS_CARPETA = [
-  "fotitos/foto1.jpg",
-  "fotitos/foto2.jpg",
-  "fotitos/foto3.jpg",
-];
 
 /* ── Estado global ── */
 let size       = 3;
@@ -35,36 +19,42 @@ const galleryLabel = document.getElementById("galleryLabel");
 const galleryCard  = document.getElementById("galleryCard");
 const dropZone     = document.getElementById("dropZone");
 
-/* ── Cargar fotos de la carpeta al inicio ── */
+/* ── Cargar fotos desde fotos.js al arrancar ── */
 function cargarFotosCarpeta() {
-  FOTITOS_CARPETA.forEach(src => {
-    // Verificar que la imagen existe antes de mostrarla
-    const tester = new Image();
-    tester.onload  = () => addImg(src, false); // false = no auto-seleccionar cada una
-    tester.onerror = () => console.warn(`No se encontró: ${src}`);
-    tester.src = src;
+  // FOTOS es el array definido en fotos.js
+  // Si fotos.js no existe o está vacío, simplemente no hay fotos precargadas
+  if (typeof FOTOS === "undefined" || FOTOS.length === 0) {
+    console.info("No hay fotos precargadas. Sube fotos manualmente.");
+    return;
+  }
+
+  FOTOS.forEach((foto, i) => {
+    // Compatibilidad: fotos.js puede tener objetos {nombre, src} o strings directos
+    const src    = typeof foto === "string" ? foto : foto.src;
+    const nombre = typeof foto === "string" ? ("Foto " + (i + 1)) : foto.nombre;
+    addImg(src, nombre, i === 0); // auto-seleccionar solo la primera
   });
 }
 
 /* ── Añadir imagen a la galería ── */
-let primeraImg = true; // para auto-seleccionar solo la primera
-
-function addImg(src, autoSelect = true) {
+function addImg(src, nombre, autoSelect) {
   galleryLabel.style.display = "";
   galleryCard.style.display  = "";
 
   const wrap = document.createElement("div");
   wrap.classList.add("thumb-wrap");
+  wrap.title = nombre || "";
 
   const img = document.createElement("img");
   img.src = src;
   img.classList.add("thumb");
+  img.alt = nombre || "";
   img.onclick = () => selectImage(src, img);
 
   const del = document.createElement("button");
   del.classList.add("thumb-del");
   del.textContent = "×";
-  del.title = "Eliminar";
+  del.title = "Quitar";
   del.onclick = (e) => {
     e.stopPropagation();
     wrap.remove();
@@ -87,11 +77,7 @@ function addImg(src, autoSelect = true) {
   wrap.appendChild(del);
   galleryEl.appendChild(wrap);
 
-  // Auto-seleccionar la primera imagen que se cargue
-  if (primeraImg || autoSelect) {
-    primeraImg = false;
-    selectImage(src, img);
-  }
+  if (autoSelect) selectImage(src, img);
 }
 
 /* ── Seleccionar imagen ── */
@@ -103,7 +89,7 @@ function selectImage(src, imgEl) {
   createPuzzle();
 }
 
-/* ── Zona de subida (clic) ── */
+/* ── Zona de subida ── */
 dropZone.addEventListener("click", () => document.getElementById("upload").click());
 
 dropZone.addEventListener("dragover", e => {
@@ -116,15 +102,17 @@ dropZone.addEventListener("drop", e => {
   dropZone.classList.remove("drag");
   Array.from(e.dataTransfer.files)
     .filter(f => f.type.startsWith("image/"))
-    .forEach(f => addImg(URL.createObjectURL(f)));
+    .forEach(f => addImg(URL.createObjectURL(f), f.name, false));
 });
 
 document.getElementById("upload").addEventListener("change", function (e) {
-  Array.from(e.target.files).forEach(f => addImg(URL.createObjectURL(f)));
+  Array.from(e.target.files).forEach(f =>
+    addImg(URL.createObjectURL(f), f.name, galleryEl.children.length === 0)
+  );
   e.target.value = "";
 });
 
-/* ── Cambiar tamaño del puzzle ── */
+/* ── Cambiar tamaño ── */
 function changeSize(n) {
   size = n;
   emptyIndex = size * size - 1;
@@ -132,16 +120,12 @@ function changeSize(n) {
     document.getElementById("btn" + x).classList.remove("active")
   );
   document.getElementById("btn" + n).classList.add("active");
-  if (imageURL) {
-    winMsg.classList.remove("show");
-    createPuzzle();
-  }
+  if (imageURL) { winMsg.classList.remove("show"); createPuzzle(); }
 }
 
-/* ── Calcular ancho máximo disponible ── */
+/* ── Ancho máximo disponible ── */
 function getMaxWidth() {
-  const wrapper = document.getElementById("puzzleWrapper");
-  return wrapper.clientWidth - 28; // 14px padding a cada lado
+  return document.getElementById("puzzleWrapper").clientWidth - 28;
 }
 
 /* ── Crear puzzle ── */
@@ -171,7 +155,7 @@ function createPuzzle() {
       if (finalW > maxW) { finalW = maxW; finalH = finalW / aspect; }
     }
 
-    // Redondear al múltiplo exacto de size para piezas perfectas
+    // Múltiplo exacto de size → piezas perfectas sin píxeles sueltos
     pieceW = Math.floor(finalW / size);
     pieceH = Math.floor(finalH / size);
     const gridW = pieceW * size;
@@ -182,7 +166,7 @@ function createPuzzle() {
     puzzleEl.style.width  = gridW + "px";
     puzzleEl.style.height = gridH + "px";
     puzzleEl.innerHTML = "";
-    pieces = [];
+    pieces     = [];
     emptyIndex = size * size - 1;
 
     for (let i = 0; i < size * size; i++) {
@@ -208,7 +192,7 @@ function createPuzzle() {
   };
 }
 
-/* ── Mover pieza ── */
+/* ── Movimiento ── */
 function movePiece(index) {
   const ns = getNeighbors(emptyIndex);
   if (ns.includes(index)) {
@@ -219,9 +203,7 @@ function movePiece(index) {
 }
 
 function getNeighbors(index) {
-  const ns = [];
-  const x  = index % size;
-  const y  = Math.floor(index / size);
+  const ns = [], x = index % size, y = Math.floor(index / size);
   if (x > 0)         ns.push(index - 1);
   if (x < size - 1)  ns.push(index + 1);
   if (y > 0)         ns.push(index - size);
@@ -229,7 +211,6 @@ function getNeighbors(index) {
   return ns;
 }
 
-/* ── Intercambiar piezas ── */
 function swap(i, j) {
   const tBg  = pieces[i].style.backgroundImage;
   const tPos = pieces[i].style.backgroundPosition;
@@ -254,7 +235,7 @@ function shuffle() {
   }
 }
 
-/* ── Verificar victoria ── */
+/* ── Victoria ── */
 function checkWin() {
   for (let i = 0; i < size * size; i++) {
     const p = pieces[i];
@@ -263,17 +244,15 @@ function checkWin() {
       continue;
     }
     if (p.classList.contains("empty")) return;
-    const x = i % size;
-    const y = Math.floor(i / size);
+    const x = i % size, y = Math.floor(i / size);
     const expected = `-${x * pieceW}px -${y * pieceH}px`;
-    const actual   = p.style.backgroundPosition.replace(/\s+/g, " ").trim();
-    if (actual !== expected) return;
+    if (p.style.backgroundPosition.replace(/\s+/g, " ").trim() !== expected) return;
   }
   winMsg.classList.add("show");
   winMsg.scrollIntoView({ behavior: "smooth", block: "nearest" });
 }
 
-/* ── Responsive al resize ── */
+/* ── Responsive ── */
 let resizeTimer;
 window.addEventListener("resize", () => {
   clearTimeout(resizeTimer);
