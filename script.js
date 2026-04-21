@@ -140,7 +140,7 @@ function createPuzzle() {
     // positions[celda] = índice lógico de pieza (emptyIndex = pieza vacía)
     for (let i = 0; i < size * size; i++) positions.push(i);
 
-    renderPieces(gridW, gridH);
+    shufflePuzzle();
   };
 }
 
