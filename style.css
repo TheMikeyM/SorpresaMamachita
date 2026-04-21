@@ -1,8 +1,4 @@
-*, *::before, *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
   --pink:     #f5c2d8;
@@ -18,12 +14,10 @@
   --text:     #6b4c6b;
   --text-s:   #b09ab0;
   --white:    #ffffff;
-  --shadow:   rgba(180, 130, 180, 0.18);
+  --shadow:   rgba(180,130,180,0.18);
 }
 
-html {
-  scroll-behavior: smooth;
-}
+html { scroll-behavior: smooth; }
 
 body {
   font-family: 'Nunito', sans-serif;
@@ -39,317 +33,331 @@ body {
 
 body::before {
   content: '';
-  position: fixed;
-  inset: 0;
+  position: fixed; inset: 0;
   background:
-    radial-gradient(ellipse 60% 50% at 10% 10%, #fde8f280 0%, transparent 70%),
-    radial-gradient(ellipse 50% 60% at 90% 80%, #f0e8fd80 0%, transparent 70%),
+    radial-gradient(ellipse 60% 50% at 10% 10%, #fde8f270 0%, transparent 70%),
+    radial-gradient(ellipse 50% 60% at 90% 80%, #f0e8fd70 0%, transparent 70%),
     radial-gradient(ellipse 40% 40% at 50% 50%, #e8fdf540 0%, transparent 80%);
-  pointer-events: none;
-  z-index: 0;
+  pointer-events: none; z-index: 0;
 }
 
-/* ── Layout ── */
 .content {
-  position: relative;
-  z-index: 1;
-  width: 100%;
-  max-width: 560px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1.2rem;
+  position: relative; z-index: 1;
+  width: 100%; max-width: 580px;
+  display: flex; flex-direction: column;
+  align-items: center; gap: 1.2rem;
 }
 
-/* ── Título ── */
-.title {
-  text-align: center;
-  padding-top: 0.5rem;
-}
-
+/* ── TÍTULO ── */
+.title { text-align: center; padding-top: 0.5rem; }
 .title h1 {
   font-family: 'Pacifico', cursive;
-  font-size: clamp(1.6rem, 5vw, 2.2rem);
+  font-size: clamp(1.7rem, 5vw, 2.3rem);
   color: var(--lila-d);
-  text-shadow: 2px 2px 0 #f5c2d840;
-  letter-spacing: 1px;
+  text-shadow: 3px 3px 0 #f5c2d850;
 }
+.title p { font-size: 0.85rem; color: var(--text-s); margin-top: 4px; }
 
-.title p {
-  font-size: 0.88rem;
-  color: var(--text-s);
-  margin-top: 4px;
-}
-
-/* ── Card ── */
-.card {
-  background: var(--white);
-  border-radius: 20px;
-  box-shadow: 0 4px 20px var(--shadow);
-  width: 100%;
-}
-
-/* ── Galería ── */
+/* ── LABEL SECCIONES ── */
 .section-label {
-  font-size: 0.78rem;
-  font-weight: 600;
-  color: var(--text-s);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  align-self: flex-start;
-  width: 100%;
-  padding-left: 2px;
+  font-size: 0.75rem; font-weight: 700;
+  color: var(--text-s); text-transform: uppercase;
+  letter-spacing: 1px; align-self: flex-start;
+  width: 100%; padding-left: 2px;
 }
 
-.gallery {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  width: 100%;
-}
-
-.thumb-wrap {
-  position: relative;
-  flex-shrink: 0;
-}
-
-.thumb {
-  width: 64px;
-  height: 64px;
-  border-radius: 12px;
-  object-fit: cover;
-  cursor: pointer;
-  border: 3px solid transparent;
-  display: block;
-  transition: transform 0.15s, border-color 0.15s;
-}
-
-.thumb:hover {
-  transform: scale(1.08);
-}
-
-.thumb.selected {
-  border-color: var(--lila-d);
-  box-shadow: 0 0 0 3px #d8c2f580;
-}
-
-.thumb-del {
-  position: absolute;
-  top: -5px;
-  right: -5px;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  background: var(--pink-d);
-  border: none;
-  color: white;
-  font-size: 10px;
-  font-weight: 700;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  line-height: 1;
-}
-
-.thumb-del:hover {
-  background: #c05080;
-}
-
-/* ── Zona de subida ── */
-.upload-zone {
-  border: 2.5px dashed var(--pink);
-  border-radius: 16px;
-  padding: 1.2rem 1rem;
-  text-align: center;
-  cursor: pointer;
-  background: var(--pink-bg);
-  transition: 0.2s;
-  width: 100%;
-}
-
-.upload-zone:hover,
-.upload-zone.drag {
-  border-color: var(--pink-d);
-  background: #fdd4e8;
-}
-
-.upload-zone input {
-  display: none;
-}
-
-.upload-zone .upload-icon {
-  font-size: 1.8rem;
-  display: block;
-  margin-bottom: 4px;
-}
-
-.upload-zone p {
-  font-size: 0.88rem;
-  color: var(--pink-d);
-  font-weight: 600;
-}
-
-.upload-zone span {
-  font-size: 0.76rem;
-  color: var(--text-s);
-}
-
-/* ── Controles ── */
-.controls {
-  display: flex;
-  align-items: center;
+/* ── GALERÍA ÁLBUM ── */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
   gap: 10px;
-  flex-wrap: wrap;
-  justify-content: center;
   width: 100%;
 }
 
-.size-group {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.size-group label {
-  font-size: 0.82rem;
-  color: var(--text-s);
-  font-weight: 600;
-}
-
-.size-btns {
-  display: flex;
-  gap: 5px;
-}
-
-.size-btns button {
-  padding: 5px 13px;
-  border-radius: 20px;
-  border: 2px solid var(--lila);
-  background: white;
-  color: var(--lila-d);
-  font-size: 0.8rem;
-  font-weight: 700;
-  font-family: 'Nunito', sans-serif;
+.album-item {
+  aspect-ratio: 1;
+  border-radius: 14px;
+  overflow: hidden;
   cursor: pointer;
-  transition: 0.15s;
+  position: relative;
+  border: 3px solid transparent;
+  transition: transform 0.18s, border-color 0.18s, box-shadow 0.18s;
+  box-shadow: 0 2px 10px var(--shadow);
 }
-
-.size-btns button.active,
-.size-btns button:hover {
-  background: var(--lila-bg);
+.album-item:hover { transform: scale(1.06); }
+.album-item.active {
   border-color: var(--lila-d);
+  box-shadow: 0 0 0 4px #d8c2f560, 0 4px 14px var(--shadow);
 }
 
+/* Foto real (visible cuando está completada) */
+.album-img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: opacity 0.5s;
+}
+
+/* Carátula bloqueada */
+.album-lock {
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, #e8d0f8, #f8c8e0);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 4px;
+  transition: opacity 0.5s;
+}
+.album-lock .lock-icon { font-size: 1.6rem; }
+.album-lock .lock-num {
+  font-size: 0.7rem; font-weight: 800;
+  color: var(--lila-d); letter-spacing: 1px;
+}
+
+.album-item.unlocked .album-lock { opacity: 0; pointer-events: none; }
+
+/* Badge completado */
+.album-badge {
+  position: absolute; top: 4px; right: 4px;
+  background: var(--menta-d);
+  color: white; font-size: 0.65rem; font-weight: 800;
+  padding: 2px 6px; border-radius: 20px;
+  opacity: 0; transition: opacity 0.4s;
+  pointer-events: none;
+}
+.album-item.unlocked .album-badge { opacity: 1; }
+
+/* ── CONTROLES ── */
+.controls {
+  display: flex; align-items: center;
+  gap: 10px; flex-wrap: wrap;
+  justify-content: center; width: 100%;
+}
+.size-group { display: flex; align-items: center; gap: 6px; }
+.size-group label { font-size: 0.8rem; color: var(--text-s); font-weight: 700; }
+.size-btns { display: flex; gap: 5px; }
+.size-btns button {
+  padding: 5px 12px; border-radius: 20px;
+  border: 2px solid var(--lila); background: white;
+  color: var(--lila-d); font-size: 0.78rem; font-weight: 700;
+  font-family: 'Nunito', sans-serif; cursor: pointer; transition: 0.15s;
+}
+.size-btns button.active, .size-btns button:hover {
+  background: var(--lila-bg); border-color: var(--lila-d);
+}
 .btn-mezclar {
-  padding: 8px 22px;
-  border-radius: 20px;
-  border: none;
+  padding: 8px 20px; border-radius: 20px; border: none;
   background: linear-gradient(135deg, var(--lila-d), var(--pink-d));
-  color: white;
-  font-size: 0.88rem;
-  font-weight: 700;
-  font-family: 'Nunito', sans-serif;
-  cursor: pointer;
+  color: white; font-size: 0.85rem; font-weight: 700;
+  font-family: 'Nunito', sans-serif; cursor: pointer;
+  box-shadow: 0 3px 10px rgba(180,100,180,0.3);
   transition: 0.18s;
-  box-shadow: 0 3px 10px rgba(180, 100, 180, 0.3);
-  letter-spacing: 0.3px;
 }
+.btn-mezclar:hover { transform: translateY(-2px); box-shadow: 0 5px 14px rgba(180,100,180,0.4); }
+.btn-mezclar:active { transform: translateY(0); }
 
-.btn-mezclar:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 5px 14px rgba(180, 100, 180, 0.4);
-}
-
-.btn-mezclar:active {
-  transform: translateY(0);
-}
-
-/* ── Victoria ── */
+/* ── MENSAJE VICTORIA ── */
 .win-msg {
-  width: 100%;
-  text-align: center;
-  padding: 12px 16px;
-  border-radius: 16px;
+  width: 100%; text-align: center;
+  padding: 12px 16px; border-radius: 16px;
   background: linear-gradient(135deg, var(--menta-bg), var(--lila-bg));
-  border: 2px solid var(--menta-d);
-  color: var(--menta-d);
-  font-size: 1rem;
-  font-weight: 700;
-  display: none;
+  border: 2px solid var(--menta-d); color: var(--menta-d);
+  font-size: 1rem; font-weight: 700;
+  display: none; gap: 8px; align-items: center; justify-content: center;
   animation: popIn 0.4s ease;
 }
-
-.win-msg.show {
-  display: block;
-}
+.win-msg.show { display: flex; }
+.win-emoji { font-size: 1.4rem; }
 
 @keyframes popIn {
-  0%   { transform: scale(0.85); opacity: 0; }
-  70%  { transform: scale(1.04); }
-  100% { transform: scale(1);    opacity: 1; }
+  0%   { transform: scale(0.8); opacity: 0; }
+  70%  { transform: scale(1.05); }
+  100% { transform: scale(1); opacity: 1; }
 }
 
-/* ── Puzzle ── */
+/* ── TABLERO ── */
+.board-wrapper { width: 100%; }
+.board-label {
+  font-size: 0.78rem; font-weight: 700;
+  color: var(--text-s); text-transform: uppercase;
+  letter-spacing: 1px; margin-bottom: 8px; padding-left: 2px;
+}
+
 .puzzle-wrapper {
   background: var(--white);
-  border-radius: 20px;
-  padding: 14px;
-  box-shadow: 0 4px 24px var(--shadow);
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  border-radius: 22px;
+  padding: 16px;
+  box-shadow:
+    0 6px 30px var(--shadow),
+    inset 0 1px 0 rgba(255,255,255,0.8);
+  display: flex; justify-content: center; align-items: center;
   width: 100%;
+  /* Fondo de tablero tipo madera clara */
+  background-image:
+    repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 20px,
+      rgba(200,160,200,0.04) 20px,
+      rgba(200,160,200,0.04) 40px
+    );
 }
 
+/* ── GRID DEL PUZZLE ── */
 #puzzle {
   display: grid;
-  gap: 3px;
+  gap: 0;
   line-height: 0;
+  /* Sombra exterior que da sensación de tablero hundido */
+  box-shadow: inset 0 2px 8px rgba(150,100,150,0.15);
+  border-radius: 6px;
+  overflow: hidden;
 }
 
+/* ── PIEZAS ── */
 .piece {
-  border-radius: 7px;
-  cursor: pointer;
-  background-repeat: no-repeat;
-  transition: transform 0.1s;
   position: relative;
+  cursor: grab;
+  background-repeat: no-repeat;
+  transition: transform 0.12s, box-shadow 0.12s, z-index 0s;
+  z-index: 1;
+  /* Borde entre piezas simulado con outline interior */
+  outline: 1px solid rgba(180,130,180,0.25);
+  outline-offset: -1px;
 }
 
-.piece:not(.empty):hover {
-  transform: scale(0.96);
+/* Efecto "macho/hembra" de pieza — pestañas con clip-path por fila/col se hacen en JS */
+.piece::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255,255,255,0.18) 0%,
+    transparent 50%,
+    rgba(0,0,0,0.06) 100%
+  );
+  pointer-events: none;
   z-index: 2;
 }
 
+/* Pieza levantada (seleccionada) */
+.piece.lifted {
+  transform: scale(1.12) translateY(-4px);
+  z-index: 100;
+  cursor: grabbing;
+  box-shadow:
+    0 10px 30px rgba(150,80,180,0.35),
+    0 4px 10px rgba(0,0,0,0.15);
+  outline: 2px solid var(--lila-d);
+  outline-offset: -2px;
+}
+
+/* Celda destino — parpadea para indicar que se puede soltar */
+.piece.target {
+  outline: 2px dashed var(--pink-d);
+  outline-offset: -2px;
+  background-color: rgba(245,194,216,0.15) !important;
+}
+
+/* Pieza vacía (hueco) */
 .piece.empty {
   background-image: none !important;
-  background-color: var(--pink-bg) !important;
-  border: 2.5px dashed var(--pink);
+  background-color: rgba(220,180,230,0.2) !important;
   cursor: default;
-  border-radius: 7px;
+  outline: none;
+}
+.piece.empty::before { display: none; }
+.piece.empty::after {
+  content: '';
+  position: absolute; inset: 3px;
+  border-radius: 4px;
+  border: 2px dashed rgba(200,160,210,0.5);
 }
 
-.piece.empty:hover {
-  transform: none;
+/* Pieza en su lugar correcto — brillo sutil */
+.piece.correct {
+  outline: 1.5px solid rgba(92,201,160,0.4);
+}
+.piece.correct::before {
+  background: linear-gradient(
+    135deg,
+    rgba(200,255,230,0.12) 0%,
+    transparent 50%,
+    rgba(0,0,0,0.04) 100%
+  );
 }
 
-/* ── Estado vacío ── */
+/* ── ESTADO VACÍO ── */
 .empty-state {
+  text-align: center; padding: 3rem 1rem;
+  color: var(--text-s); font-size: 0.9rem;
+  display: flex; flex-direction: column;
+  align-items: center; gap: 10px;
+}
+.empty-state .big { font-size: 3rem; }
+
+/* ── OVERLAY DE REVELACIÓN ── */
+.reveal-overlay {
+  display: none;
+  position: fixed; inset: 0; z-index: 1000;
+  background: rgba(100,60,120,0.55);
+  backdrop-filter: blur(6px);
+  align-items: center; justify-content: center;
+  animation: fadeIn 0.3s ease;
+}
+.reveal-overlay.show { display: flex; }
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.reveal-card {
+  background: white;
+  border-radius: 24px;
+  padding: 1.5rem;
+  max-width: 340px;
+  width: 90%;
   text-align: center;
-  padding: 2.5rem 1rem;
-  color: var(--text-s);
-  font-size: 0.9rem;
-  width: 100%;
+  box-shadow: 0 20px 60px rgba(100,50,150,0.3);
+  animation: slideUp 0.4s cubic-bezier(0.34,1.56,0.64,1);
+  display: flex; flex-direction: column;
+  align-items: center; gap: 1rem;
 }
 
-.empty-state .big {
-  font-size: 2.5rem;
-  display: block;
-  margin-bottom: 8px;
+@keyframes slideUp {
+  from { transform: translateY(40px) scale(0.9); opacity: 0; }
+  to   { transform: translateY(0) scale(1); opacity: 1; }
 }
 
-/* ── Responsive ── */
-@media (max-width: 400px) {
-  .thumb { width: 54px; height: 54px; }
-  .btn-mezclar { padding: 8px 16px; font-size: 0.82rem; }
+.reveal-fireworks {
+  font-size: 1.6rem; letter-spacing: 4px;
+  animation: bounce 0.6s ease infinite alternate;
+}
+@keyframes bounce {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-6px); }
+}
+
+.reveal-card img {
+  width: 100%; border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(150,100,180,0.25);
+}
+.reveal-msg {
+  font-size: 1.1rem; font-weight: 800;
+  color: var(--lila-d);
+}
+.reveal-btn {
+  padding: 10px 28px; border-radius: 20px; border: none;
+  background: linear-gradient(135deg, var(--lila-d), var(--pink-d));
+  color: white; font-size: 0.9rem; font-weight: 700;
+  font-family: 'Nunito', sans-serif; cursor: pointer;
+  box-shadow: 0 4px 12px rgba(180,100,180,0.3);
+  transition: 0.15s;
+}
+.reveal-btn:hover { transform: translateY(-2px); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 420px) {
+  .gallery-grid { grid-template-columns: repeat(auto-fill, minmax(76px, 1fr)); gap: 8px; }
+  .size-btns button { padding: 5px 9px; font-size: 0.73rem; }
 }
